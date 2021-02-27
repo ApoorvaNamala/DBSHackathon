@@ -1,0 +1,16 @@
+create table customer_info(customer_key varchar(20) primary key, customer_residential_country varchar(5) not null);
+
+
+
+create table customer_account(customer_key varchar(20) ,account_key varchar(50),account_open_date date,primary key(account_key),CONSTRAINT fk_customer FOREIGN KEY (customer_key) references customer_info(customer_key));
+
+
+create table customer_transactions(transfer_key varchar(50), account_key varchar(50), transaction_amt double not null,transaction_type varchar(50) not null,country_code varchar(50) not null,transfer_data date not null,primary key(transfer_key),constraint fk_account foreign key(account_key) references customer_account(account_key));
+
+LOAD DATA INFILE 'C:/Users/8106044374/Desktop/cust.csv' INTO TABLE customer_info FIELDS TERMINATED BY ',' ENCLOSED BY '"'
+LINES TERMINATED BY '\r\n';
+
+LOAD DATA INFILE 'C:/Users/8106044374/Desktop/acc.csv' INTO TABLE customer_account FIELDS TERMINATED BY ',' ENCLOSED BY '"'
+LINES TERMINATED BY '\r\n';
+LOAD DATA INFILE 'C:/Users/8106044374/Desktop/transaction.csv' INTO TABLE customer_transactions FIELDS TERMINATED BY ',' ENCLOSED BY '"'
+LINES TERMINATED BY '\r\n';
